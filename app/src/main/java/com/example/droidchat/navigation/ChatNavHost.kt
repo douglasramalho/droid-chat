@@ -1,10 +1,10 @@
 package com.example.droidchat.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.droidchat.ui.feature.splash.SplashRoute
 
 const val SPLASH_ROUTE = "splash"
 const val SIGN_IN_ROUTE = "signIn"
@@ -16,9 +16,7 @@ fun ChatNavHost() {
 
     NavHost(navController = navController, startDestination = SPLASH_ROUTE) {
         composable(SPLASH_ROUTE) {
-            Text(
-                text = "Hello World!",
-            )
+            SplashRoute()
         }
         composable(SIGN_IN_ROUTE) {
 
