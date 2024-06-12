@@ -1,18 +1,18 @@
 [versions]
 accompanistPermissions = "0.34.0"
-agp = "8.4.0"
+agp = "8.4.2"
 coilCompose = "2.5.0"
 coreSplashscreen = "1.0.1"
-datastorePreferences = "1.1.0"
-firebaseBom = "32.8.1"
+datastorePreferences = "1.1.1"
+firebaseBom = "33.1.0"
 hiltAndroid = "2.50"
 hiltNavigationCompose = "1.2.0"
 jwtdecode = "2.0.2"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 kotlinxCoroutinesAndroid = "1.7.3"
 kotlinxSerializationJson = "1.6.0"
-ksp = "1.9.23-1.0.20"
-coreKtx = "1.13.0"
+ksp = "2.0.0-1.0.21"
+coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -25,9 +25,9 @@ ktorClientLogging = "2.3.6"
 ktorClientResources = "2.3.6"
 ktorClientWebsockets = "2.3.6"
 ktorSerializationKotlinxJson = "2.3.6"
-lifecycleRuntimeKtx = "2.7.0"
+lifecycleRuntimeKtx = "2.8.1"
 activityCompose = "1.9.0"
-composeBom = "2024.04.01"
+composeBom = "2024.05.00"
 navigationCompose = "2.7.7"
 protobufJavalite = "3.24.4"
 
@@ -75,3 +75,4 @@ protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
