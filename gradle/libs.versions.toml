@@ -1,6 +1,6 @@
 [versions]
 accompanistPermissions = "0.34.0"
-agp = "8.3.2"
+agp = "8.4.0"
 coilCompose = "2.5.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.0"
