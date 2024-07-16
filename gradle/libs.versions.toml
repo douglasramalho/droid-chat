@@ -1,6 +1,6 @@
 [versions]
 accompanistPermissions = "0.34.0"
-agp = "8.4.2"
+agp = "8.5.0"
 coilCompose = "2.5.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.1"
@@ -28,7 +28,7 @@ ktorSerializationKotlinxJson = "2.3.6"
 lifecycleRuntimeKtx = "2.8.3"
 activityCompose = "1.9.0"
 composeBom = "2024.06.00"
-navigationCompose = "2.7.7"
+navigationCompose = "2.8.0-beta05"
 protobufJavalite = "3.24.4"
 
 [libraries]
@@ -75,4 +75,5 @@ protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
