@@ -5,19 +5,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.droidchat.ui.theme.DroidChatTheme
 
 @Composable
-fun SignUpRouteRoute() {
-    SignUpRouteScreen()
+fun SignUpRoute() {
+    SignUpScreen()
 }
 
 @Composable
-fun SignUpRouteScreen() {
+fun SignUpScreen() {
 
 }
 
 @Preview
 @Composable
-private fun SignUpRouteScreenPreview() {
+private fun SignUpScreenPreview() {
     DroidChatTheme {
-        SignUpRouteScreen()
+        SignUpScreen()
     }
 }
