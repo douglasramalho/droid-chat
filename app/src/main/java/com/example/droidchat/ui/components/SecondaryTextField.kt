@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.droidchat.R
+import com.example.droidchat.ui.extension.bottomBorder
 import com.example.droidchat.ui.extension.getVisualTransformationForPassword
 import com.example.droidchat.ui.theme.ColorSuccess
 import com.example.droidchat.ui.theme.DroidChatTheme
@@ -79,6 +81,8 @@ fun SecondaryTextField(
             color = MaterialTheme.colorScheme.surface
         ) {
             Row(
+                modifier = Modifier
+                    .bottomBorder(Color.Blue, 2.dp),
                 verticalAlignment = CenterVertically
             ) {
                 Column(
