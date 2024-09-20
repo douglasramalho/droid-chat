@@ -9,30 +9,33 @@ import androidx.navigation.navOptions
 import com.example.droidchat.navigation.extension.slidOutTo
 import com.example.droidchat.navigation.extension.slideInTo
 import com.example.droidchat.ui.feature.signin.SignInRoute
+import com.example.droidchat.ui.feature.signup.SignUpRoute
 import com.example.droidchat.ui.feature.splash.SplashRoute
 import kotlinx.serialization.Serializable
 
-@Serializable
-object SplashRoute
+sealed interface Route {
+    @Serializable
+    object SplashRoute
 
-@Serializable
-object SignInRoute
+    @Serializable
+    object SignInRoute
 
-@Serializable
-object SignUpRoute
+    @Serializable
+    object SignUpRoute
+}
 
 @Composable
 fun ChatNavHost() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = SplashRoute) {
-        composable<SplashRoute> {
+    NavHost(navController = navController, startDestination = Route.SplashRoute) {
+        composable<Route.SplashRoute> {
             SplashRoute(
                 onNavigateToSignIn = {
                     navController.navigate(
-                        route = SignInRoute,
+                        route = Route.SignInRoute,
                         navOptions = navOptions {
-                            popUpTo(SplashRoute) {
+                            popUpTo(Route.SplashRoute) {
                                 inclusive = true
                             }
                         }
@@ -40,7 +43,7 @@ fun ChatNavHost() {
                 }
             )
         }
-        composable<SignInRoute>(
+        composable<Route.SignInRoute>(
             enterTransition = {
                 this.slideInTo(AnimatedContentTransitionScope.SlideDirection.Right)
             },
@@ -50,19 +53,19 @@ fun ChatNavHost() {
         ) {
             SignInRoute(
                 navigateToSignUp = {
-                    navController.navigate(SignUpRoute)
+                    navController.navigate(Route.SignUpRoute)
                 }
             )
         }
-        composable<SignUpRoute>(
+        composable<Route.SignUpRoute>(
             enterTransition = {
                 this.slideInTo(AnimatedContentTransitionScope.SlideDirection.Left)
             },
             exitTransition = {
-                this.slidOutTo(AnimatedContentTransitionScope.SlideDirection.Left)
+                this.slidOutTo(AnimatedContentTransitionScope.SlideDirection.Right)
             }
         ) {
-
+            SignUpRoute()
         }
     }
 }
