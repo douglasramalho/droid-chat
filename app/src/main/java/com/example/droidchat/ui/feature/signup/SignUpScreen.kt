@@ -1,5 +1,6 @@
 package com.example.droidchat.ui.feature.signup
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.droidchat.R
 import com.example.droidchat.ui.components.PrimaryButton
+import com.example.droidchat.ui.components.ProfilePictureSelector
 import com.example.droidchat.ui.components.SecondaryTextField
 import com.example.droidchat.ui.theme.BackgroundGradient
 import com.example.droidchat.ui.theme.DroidChatTheme
@@ -47,6 +53,10 @@ fun SignUpScreen() {
         ) {
             Spacer(modifier = Modifier.height(56.dp))
 
+            var profilePictureSelectedUri by remember {
+                mutableStateOf<Uri?>(null)
+            }
+
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null
@@ -65,8 +75,15 @@ fun SignUpScreen() {
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    ProfilePictureSelector(
+                        imageUri = profilePictureSelectedUri
+                    )
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
                     SecondaryTextField(
                         label = stringResource(id = R.string.feature_sign_up_first_name),
                         value = "",
