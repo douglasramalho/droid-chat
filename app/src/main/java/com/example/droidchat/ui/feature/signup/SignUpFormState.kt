@@ -6,9 +6,11 @@ import androidx.annotation.StringRes
 data class SignUpFormState(
     val profilePictureUri: Uri? = null,
     val firstName: String = "",
-    @StringRes val firstNameError: Int? = null,
+    @StringRes
+    val firstNameError: Int? = null,
     val lastName: String = "",
-    @StringRes val lastNameError: Int? = null,
+    @StringRes
+    val lastNameError: Int? = null,
     val email: String = "",
     @StringRes
     val emailError: Int? = null,
@@ -16,6 +18,8 @@ data class SignUpFormState(
     @StringRes
     val passwordError: Int? = null,
     val passwordConfirmation: String = "",
+    @StringRes
+    val passwordExtraText: Int? = null,
     val isProfilePictureModalBottomSheetOpen: Boolean = false,
     val isLoading: Boolean = false,
 )

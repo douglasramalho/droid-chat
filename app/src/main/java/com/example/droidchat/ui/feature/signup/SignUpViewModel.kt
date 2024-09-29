@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.droidchat.R
 
 class SignUpViewModel : ViewModel() {
 
@@ -26,9 +27,11 @@ class SignUpViewModel : ViewModel() {
             }
             is SignUpFormEvent.PasswordChanged -> {
                 formState = formState.copy(password = event.password)
+                updatePasswordExtraText()
             }
             is SignUpFormEvent.PasswordConfirmationChanged -> {
                 formState = formState.copy(passwordConfirmation = event.passwordConfirmation)
+                updatePasswordExtraText()
             }
             SignUpFormEvent.OpenProfilePictureOptionsModalBottomSheet -> {
                 formState = formState.copy(isProfilePictureModalBottomSheetOpen = true)
@@ -40,6 +43,15 @@ class SignUpViewModel : ViewModel() {
 
             }
         }
+    }
+
+    private fun updatePasswordExtraText() {
+        formState = formState.copy(
+            passwordExtraText = if (formState.password.isNotEmpty()
+                && formState.password == formState.passwordConfirmation) {
+                R.string.feature_sign_up_passwords_match
+            } else null
+        )
     }
 
     private fun isValidForm(): Boolean {
