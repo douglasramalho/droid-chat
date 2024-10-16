@@ -5,8 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.droidchat.R
+import com.example.droidchat.ui.validator.FormValidator
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(
+    private val formValidator: FormValidator<SignUpFormState>
+) : ViewModel() {
 
     var formState by mutableStateOf(SignUpFormState())
         private set
@@ -40,7 +43,7 @@ class SignUpViewModel : ViewModel() {
                 formState = formState.copy(isProfilePictureModalBottomSheetOpen = false)
             }
             SignUpFormEvent.Submit -> {
-
+                doSignUp()
             }
         }
     }
@@ -54,14 +57,16 @@ class SignUpViewModel : ViewModel() {
         )
     }
 
-    private fun isValidForm(): Boolean {
-        return false
-    }
-
     private fun doSignUp() {
         if (isValidForm()) {
             formState = formState.copy(isLoading = true)
             // Request to API
         }
+    }
+
+    private fun isValidForm(): Boolean {
+        return !formValidator.validate(formState).also {
+            formState = it
+        }.hasError
     }
 }
