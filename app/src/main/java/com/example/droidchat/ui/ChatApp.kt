@@ -1,7 +1,9 @@
 package com.example.droidchat.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -14,10 +16,12 @@ fun ChatApp() {
         bottomBar = {
             // Vazio
         }
-    ) { paddingValues ->
+    ) { innerPaddings ->
         Box(
            modifier = Modifier
-               .padding(paddingValues)
+               .consumeWindowInsets(innerPaddings)
+               .padding(innerPaddings)
+               .imePadding()
                .fillMaxSize()
         ) {
             ChatNavHost()
