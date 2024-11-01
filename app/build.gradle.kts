@@ -4,16 +4,17 @@ plugins {
     alias(libs.plugins.kotlinKsp)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
     namespace = "com.example.droidchat"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.droidchat"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

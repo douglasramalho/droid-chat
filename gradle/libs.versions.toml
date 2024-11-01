@@ -5,13 +5,13 @@ coilCompose = "2.5.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.1"
 firebaseBom = "33.5.1"
-hiltAndroid = "2.51.1"
+hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
 jwtdecode = "2.0.2"
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 kotlinxCoroutinesAndroid = "1.7.3"
 kotlinxSerializationJson = "1.7.1"
-ksp = "2.0.20-1.0.24"
+ksp = "2.0.21-1.0.26"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -77,3 +77,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 kotlinKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
