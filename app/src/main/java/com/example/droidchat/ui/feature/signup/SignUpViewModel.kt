@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.droidchat.R
 import com.example.droidchat.data.repository.AuthRepository
 import com.example.droidchat.model.CreateAccount
+import com.example.droidchat.model.NetworkException
 import com.example.droidchat.ui.validator.FormValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -81,6 +82,11 @@ class SignUpViewModel @Inject constructor(
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    if (e is NetworkException.ApiException) {
+                        // Mostrar erro de validação de campos para o usuário
+                    } else {
+                        // Mostrar erro genérico para o usuário
+                    }
                 }
             }
         }
