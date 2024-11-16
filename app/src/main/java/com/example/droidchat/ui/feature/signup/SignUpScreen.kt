@@ -124,7 +124,8 @@ fun SignUpScreen(
                         modifier = Modifier
                             .clickable {
                                 onFormEvent(SignUpFormEvent.OpenProfilePictureOptionsModalBottomSheet)
-                            }
+                            },
+                        isCompressingImage = formState.isCompressingImage,
                     )
 
                     Spacer(modifier = Modifier.height(30.dp))

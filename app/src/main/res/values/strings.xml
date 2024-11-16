@@ -5,6 +5,7 @@
     <string name="common_generic_error_message">Tente novamente ou reporte um problema</string>
     <string name="common_ok">OK</string>
     <string name="common_add_profile_photo">Adicionar foto de perfil</string>
+    <string name="common_add_profile_photo_optimizing">Otimizando…</string>
     <string name="common_take_photo">Tirar foto</string>
     <string name="common_upload_photo">Galeria</string>
 
