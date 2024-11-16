@@ -1,6 +1,5 @@
 package com.example.droidchat.ui.feature.signup
 
-import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +14,6 @@ import com.example.droidchat.model.NetworkException
 import com.example.droidchat.ui.validator.FormValidator
 import com.example.droidchat.util.image.ImageCompressor
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +21,7 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val formValidator: FormValidator<SignUpFormState>,
     private val authRepository: AuthRepository,
-    @ApplicationContext private val context: Context,
+    private val imageCompressor: ImageCompressor,
 ) : ViewModel() {
 
     var formState by mutableStateOf(SignUpFormState())
@@ -70,7 +68,7 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 formState = formState.copy(isCompressingImage = true)
-                val compressedFile = ImageCompressor.compressAndResizeImage(context, uri)
+                val compressedFile = imageCompressor.compressAndResizeImage(uri)
                 formState = formState.copy(profilePictureUri = compressedFile.toUri())
             } catch (e: Exception) {
                 // Log error
