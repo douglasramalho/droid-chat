@@ -12,12 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.droidchat.R
+import com.example.droidchat.ui.components.AppDialog
 import com.example.droidchat.ui.components.PrimaryButton
 import com.example.droidchat.ui.components.ProfilePictureOptionsModalBottomSheet
 import com.example.droidchat.ui.components.ProfilePictureSelector
@@ -41,7 +39,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpRoute(
-    viewModel: SignUpViewModel = hiltViewModel()
+    viewModel: SignUpViewModel = hiltViewModel(),
+    onSignUpSuccess: () -> Unit,
 ) {
     val formState = viewModel.formState
 
@@ -50,32 +49,26 @@ fun SignUpRoute(
         onFormEvent = viewModel::onFormEvent
     )
 
+    if (formState.isSignedUp) {
+        AppDialog(
+            onDismissRequest = {
+                viewModel.successMessageShown()
+                onSignUpSuccess()
+            },
+            onConfirmButtonClick = {
+                viewModel.successMessageShown()
+                onSignUpSuccess()
+            },
+            message = stringResource(R.string.feature_sign_up_success),
+        )
+    }
+
     formState.apiErrorMessageResId?.let { resId ->
-        AlertDialog(
+        AppDialog(
             onDismissRequest = viewModel::errorMessageShown,
-            confirmButton = {
-                TextButton(
-                    onClick = viewModel::errorMessageShown
-                ) {
-                    Text(
-                        text = stringResource(R.string.common_ok)
-                    )
-                }
-            },
-            title = {
-                Text(
-                    text = stringResource(R.string.common_generic_error_title)
-                )
-            },
-            text = {
-                Text(
-                    text = stringResource(resId),
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            },
-            containerColor = MaterialTheme.colorScheme.surface,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            textContentColor = MaterialTheme.colorScheme.onSurface,
+            onConfirmButtonClick = viewModel::errorMessageShown,
+            message = stringResource(resId),
+            title = stringResource(R.string.common_generic_error_title)
         )
     }
 }

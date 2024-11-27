@@ -10,6 +10,7 @@
     <string name="common_upload_photo">Galeria</string>
 
     <string name="error_message_invalid_username_or_password">E-mail ou senha incorretos</string>
+    <string name="error_message_profile_picture_uploading_failed">Erro ao fazer upload da foto de perfil, tente novamente (formatos aceitos: jpg, jpeg, png)</string>
     <string name="error_message_api_form_validation_failed">Erro de validação de formulário, confira os dados e tente novamente</string>
     <string name="error_message_user_with_username_already_exists">Usuário com o e-mail fornecido já existe no sistema</string>
     <string name="error_message_field_blank">%1s é obrigatório</string>
@@ -34,6 +35,7 @@
     <string name="feature_sign_up_passwords_match">as senhas são iguais</string>
     <string name="feature_sign_up_has_account">Já possui uma conta?</string>
     <string name="feature_sign_up_login_here">Fazer login</string>
+    <string name="feature_sign_up_success">Cadastro realizado com sucesso. Faça login para continuar</string>
 
     <string name="splash_safety_info">Mensagens seguras, criptografadas e privadas</string>
 
