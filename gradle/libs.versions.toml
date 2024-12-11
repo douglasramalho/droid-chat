@@ -30,6 +30,7 @@ activityCompose = "1.9.3"
 composeBom = "2024.10.01"
 navigationCompose = "2.8.3"
 protobufJavalite = "3.24.4"
+protoBuf = "0.9.4"
 exifinterface = "1.3.7"
 securityCrypto = "1.1.0-alpha06"
 
@@ -82,3 +83,4 @@ kotlinKsp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+protoBuf = { id = "com.google.protobuf", version.ref = "protoBuf" }
