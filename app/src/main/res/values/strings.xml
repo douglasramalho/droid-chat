@@ -37,6 +37,8 @@
     <string name="feature_sign_up_login_here">Fazer login</string>
     <string name="feature_sign_up_success">Cadastro realizado com sucesso. Faça login para continuar</string>
 
+    <string name="feature_chats_greeting"><![CDATA[Olá, <b>%1$s</b>]]></string>
+
     <string name="splash_safety_info">Mensagens seguras, criptografadas e privadas</string>
     <string name="error_message_when_opening_app">Ocorreu um erro inesperado ao abrir o aplicativo\n\nPor favor, tente novamente mais tarde.</string>
     <string name="error_confirm_button_close_app">Fechar aplicativo</string>
