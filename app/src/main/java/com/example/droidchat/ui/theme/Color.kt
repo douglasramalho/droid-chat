@@ -17,7 +17,7 @@ val Green80 = Color(0xFFb1cbcf)
 val Neutral10 = Color(0xFF191c1d)
 val Neutral60 = Color(0xFF8a91a8)
 val Neutral90 = Color(0xFFe1e3e3)
-val Surface = Color(0xFFfafdfd)
+val Surface = Color(0xFFffffff)
 val Grey1 = Color(0xFFeff0f1)
 
 val ColorSuccess = Color(0xFF2E9000)

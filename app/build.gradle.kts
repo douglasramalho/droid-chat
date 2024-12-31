@@ -98,6 +98,7 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.exifinterface)
     implementation(libs.security.crypto)
+    implementation(libs.constraint.layout.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
