@@ -39,6 +39,9 @@
 
     <string name="feature_chats_greeting"><![CDATA[Olá, <b>%1$s</b>]]></string>
 
+    <string name="bottom_navigation_item_chats">Conversas</string>
+    <string name="bottom_navigation_item_profile">Perfil</string>
+
     <string name="splash_safety_info">Mensagens seguras, criptografadas e privadas</string>
     <string name="error_message_when_opening_app">Ocorreu um erro inesperado ao abrir o aplicativo\n\nPor favor, tente novamente mais tarde.</string>
     <string name="error_confirm_button_close_app">Fechar aplicativo</string>
