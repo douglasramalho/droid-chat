@@ -82,6 +82,7 @@ class AuthRepositoryImpl @Inject constructor(
                 val userResponse = networkDataSource.authenticate(token)
 
                 selfUserManager.saveSelfUserData(
+                    id = userResponse.id,
                     firstName = userResponse.firstName,
                     lastName = userResponse.lastName,
                     profilePictureUrl = userResponse.profilePictureUrl ?: "",
