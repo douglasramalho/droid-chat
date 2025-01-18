@@ -13,3 +13,13 @@ class ChatPreviewParameterProvider : PreviewParameterProvider<Chat> {
         chat3,
     )
 }
+
+class ChatListPreviewParameterProvider : PreviewParameterProvider<List<Chat>> {
+    override val values: Sequence<List<Chat>> = sequenceOf(
+        listOf(
+            chat1,
+            chat2,
+            chat3,
+        )
+    )
+}

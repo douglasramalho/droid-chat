@@ -28,7 +28,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.droidchat.R
 import com.example.droidchat.model.Chat
-import com.example.droidchat.model.User
+import com.example.droidchat.model.fake.chat1
+import com.example.droidchat.model.fake.chat2
+import com.example.droidchat.model.fake.chat3
 import com.example.droidchat.ui.components.ChatItem
 import com.example.droidchat.ui.theme.DroidChatTheme
 import com.example.droidchat.ui.theme.Grey1
@@ -136,54 +138,9 @@ private fun ChatsScreenSuccessPreview() {
         ChatsScreen(
             chatsListUiState = ChatsViewModel.ChatsListUiState.Success(
                 chats = listOf(
-                    Chat(
-                        id = 1,
-                        lastMessage = "Olá!",
-                        members = listOf(
-                            User(
-                                id = 1,
-                                self = true,
-                                firstName = "Douglas",
-                                lastName = "Motta",
-                                profilePictureUrl = "",
-                                username = "douglas.motta"
-                            ),
-                            User(
-                                id = 2,
-                                self = false,
-                                firstName = "João",
-                                lastName = "Silva",
-                                profilePictureUrl = "",
-                                username = "joao.silva"
-                            )
-                        ),
-                        unreadCount = 0,
-                        timestamp = "12:25"
-                    ),
-                    Chat(
-                        id = 2,
-                        lastMessage = "Olá!",
-                        members = listOf(
-                            User(
-                                id = 1,
-                                self = true,
-                                firstName = "Douglas",
-                                lastName = "Motta",
-                                profilePictureUrl = "",
-                                username = "douglas.motta"
-                            ),
-                            User(
-                                id = 2,
-                                self = false,
-                                firstName = "João",
-                                lastName = "Silva",
-                                profilePictureUrl = "",
-                                username = "joao.silva"
-                            )
-                        ),
-                        unreadCount = 0,
-                        timestamp = "12:25"
-                    )
+                    chat1,
+                    chat2,
+                    chat3,
                 ),
             )
         )
