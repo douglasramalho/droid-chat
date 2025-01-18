@@ -32,9 +32,11 @@ import com.example.droidchat.model.Chat
 import com.example.droidchat.model.fake.chat1
 import com.example.droidchat.model.fake.chat2
 import com.example.droidchat.model.fake.chat3
+import com.example.droidchat.ui.components.AnimatedContent
 import com.example.droidchat.ui.components.ChatItem
-import com.example.droidchat.ui.components.ChatItemError
 import com.example.droidchat.ui.components.ChatItemShimmer
+import com.example.droidchat.ui.components.GeneralError
+import com.example.droidchat.ui.components.PrimaryButton
 import com.example.droidchat.ui.theme.DroidChatTheme
 import com.example.droidchat.ui.theme.Grey1
 
@@ -117,8 +119,18 @@ fun ChatsScreen(
                 }
 
                 ChatsViewModel.ChatsListUiState.Error -> {
-                    ChatItemError(
-                        onTryAgainClick = onTryAgainClick,
+                    GeneralError(
+                        title = stringResource(R.string.common_generic_error_title),
+                        message = stringResource(R.string.common_generic_error_message),
+                        resource = {
+                            AnimatedContent()
+                        },
+                        action = {
+                            PrimaryButton(
+                                text = stringResource(R.string.common_try_again),
+                                onClick = onTryAgainClick
+                            )
+                        }
                     )
                 }
             }
