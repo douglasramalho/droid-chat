@@ -2,6 +2,7 @@ package com.example.droidchat.ui.feature.chats
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,7 @@ import com.example.droidchat.model.fake.chat1
 import com.example.droidchat.model.fake.chat2
 import com.example.droidchat.model.fake.chat3
 import com.example.droidchat.ui.components.ChatItem
+import com.example.droidchat.ui.components.ChatItemShimmer
 import com.example.droidchat.ui.theme.DroidChatTheme
 import com.example.droidchat.ui.theme.Grey1
 
@@ -89,7 +91,20 @@ fun ChatsScreen(
         ) {
             when (chatsListUiState) {
                 ChatsViewModel.ChatsListUiState.Loading -> {
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        repeat(5) { index ->
+                            ChatItemShimmer()
 
+                            if (index < 4) {
+                                HorizontalDivider(
+                                    color = Grey1
+                                )
+                            }
+                        }
+                    }
                 }
 
                 is ChatsViewModel.ChatsListUiState.Success -> {

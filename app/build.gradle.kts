@@ -99,6 +99,7 @@ dependencies {
     implementation(libs.exifinterface)
     implementation(libs.security.crypto)
     implementation(libs.constraint.layout.compose)
+    implementation(libs.compose.shimmer)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
