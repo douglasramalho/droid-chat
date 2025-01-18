@@ -35,6 +35,7 @@ import com.example.droidchat.model.fake.chat3
 import com.example.droidchat.ui.components.AnimatedContent
 import com.example.droidchat.ui.components.ChatItem
 import com.example.droidchat.ui.components.ChatItemShimmer
+import com.example.droidchat.ui.components.GeneralEmptyList
 import com.example.droidchat.ui.components.GeneralError
 import com.example.droidchat.ui.components.PrimaryButton
 import com.example.droidchat.ui.theme.DroidChatTheme
@@ -115,7 +116,23 @@ fun ChatsScreen(
                 }
 
                 is ChatsViewModel.ChatsListUiState.Success -> {
-                    ChatsListContent(chatsListUiState.chats)
+                    when (chatsListUiState.chats.isNotEmpty()) {
+                        true -> {
+                            ChatsListContent(chatsListUiState.chats)
+                        }
+
+                        false -> {
+                            GeneralEmptyList(
+                                message = stringResource(R.string.feature_chats_empty_list),
+                                resource = {
+                                    AnimatedContent(
+                                        resId = R.raw.animation_empty_list
+                                    )
+                                }
+                            )
+                        }
+                    }
+
                 }
 
                 ChatsViewModel.ChatsListUiState.Error -> {
@@ -177,6 +194,19 @@ private fun ChatsScreenSuccessPreview() {
                     chat2,
                     chat3,
                 ),
+            ),
+            onTryAgainClick = {},
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ChatsScreenSuccessEmptyPreview() {
+    DroidChatTheme {
+        ChatsScreen(
+            chatsListUiState = ChatsViewModel.ChatsListUiState.Success(
+                chats = emptyList(),
             ),
             onTryAgainClick = {},
         )

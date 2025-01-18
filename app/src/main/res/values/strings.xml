@@ -39,6 +39,7 @@
     <string name="feature_sign_up_success">Cadastro realizado com sucesso. Faça login para continuar</string>
 
     <string name="feature_chats_greeting"><![CDATA[Olá, <b>%1$s</b>]]></string>
+    <string name="feature_chats_empty_list">Lista de conversas vazia.\nComece uma nova conversa clicando no botão + abaixo.</string>
 
     <string name="bottom_navigation_item_chats">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>
