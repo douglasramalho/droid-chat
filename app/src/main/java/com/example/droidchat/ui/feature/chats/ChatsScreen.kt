@@ -33,6 +33,7 @@ import com.example.droidchat.model.fake.chat1
 import com.example.droidchat.model.fake.chat2
 import com.example.droidchat.model.fake.chat3
 import com.example.droidchat.ui.components.ChatItem
+import com.example.droidchat.ui.components.ChatItemError
 import com.example.droidchat.ui.components.ChatItemShimmer
 import com.example.droidchat.ui.theme.DroidChatTheme
 import com.example.droidchat.ui.theme.Grey1
@@ -45,13 +46,17 @@ fun ChatsRoute(
 
     ChatsScreen(
         chatsListUiState = chatsListUiState,
+        onTryAgainClick = {
+            viewModel.getChats()
+        }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatsScreen(
-    chatsListUiState: ChatsViewModel.ChatsListUiState
+    chatsListUiState: ChatsViewModel.ChatsListUiState,
+    onTryAgainClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -112,7 +117,9 @@ fun ChatsScreen(
                 }
 
                 ChatsViewModel.ChatsListUiState.Error -> {
-
+                    ChatItemError(
+                        onTryAgainClick = onTryAgainClick,
+                    )
                 }
             }
         }
@@ -141,7 +148,8 @@ fun ChatsListContent(chats: List<Chat>) {
 private fun ChatsScreenLoadingPreview() {
     DroidChatTheme {
         ChatsScreen(
-            chatsListUiState = ChatsViewModel.ChatsListUiState.Loading
+            chatsListUiState = ChatsViewModel.ChatsListUiState.Loading,
+            onTryAgainClick = {},
         )
     }
 }
@@ -157,7 +165,8 @@ private fun ChatsScreenSuccessPreview() {
                     chat2,
                     chat3,
                 ),
-            )
+            ),
+            onTryAgainClick = {},
         )
     }
 }
@@ -167,7 +176,8 @@ private fun ChatsScreenSuccessPreview() {
 private fun ChatsScreenErrorPreview() {
     DroidChatTheme {
         ChatsScreen(
-            chatsListUiState = ChatsViewModel.ChatsListUiState.Error
+            chatsListUiState = ChatsViewModel.ChatsListUiState.Error,
+            onTryAgainClick = {},
         )
     }
 }

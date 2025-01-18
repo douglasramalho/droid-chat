@@ -100,6 +100,7 @@ dependencies {
     implementation(libs.security.crypto)
     implementation(libs.constraint.layout.compose)
     implementation(libs.compose.shimmer)
+    implementation(libs.android.lottie.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
