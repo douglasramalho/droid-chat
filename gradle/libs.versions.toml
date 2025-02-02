@@ -36,6 +36,7 @@ protoBuf = "0.9.4"
 exifinterface = "1.3.7"
 securityCrypto = "1.1.0-alpha06"
 constraintLayoutCompose = "1.1.0"
+paging = "3.3.5"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -81,6 +82,8 @@ protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.
 exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "exifinterface" }
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 constraint-layout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintLayoutCompose" }
+paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

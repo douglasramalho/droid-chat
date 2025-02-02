@@ -102,6 +102,9 @@ dependencies {
     implementation(libs.compose.shimmer)
     implementation(libs.android.lottie.compose)
 
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
