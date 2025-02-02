@@ -69,9 +69,7 @@ fun BottomNavigationMenu(
                 NavigationBarItem(
                     selected = selected,
                     onClick = {
-                        if (!selected) {
-                            navigationState.navigateToTopLevelDestination(topLevelDestination)
-                        }
+                        navigationState.navigateToTopLevelDestination(topLevelDestination)
                     },
                     icon = {
                         topLevelDestination.iconRes?.let {
