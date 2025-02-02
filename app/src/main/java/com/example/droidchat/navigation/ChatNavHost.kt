@@ -14,6 +14,7 @@ import com.example.droidchat.ui.feature.chats.navigateToChats
 import com.example.droidchat.ui.feature.signin.SignInRoute
 import com.example.droidchat.ui.feature.signup.SignUpRoute
 import com.example.droidchat.ui.feature.splash.SplashRoute
+import com.example.droidchat.ui.feature.users.UsersRoute
 
 @Composable
 fun ChatNavHost(
@@ -88,6 +89,9 @@ fun ChatNavHost(
         }
         composable<Route.ChatsRoute> {
             ChatsRoute()
+        }
+        composable<Route.UsersRoute> {
+            UsersRoute()
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.droidchat.ui.feature.chats.navigateToChats
+import com.example.droidchat.ui.feature.users.navigateToUsers
 
 @Composable
 fun rememberDroidChatNavigationState(
@@ -48,8 +49,7 @@ class DroidChatNavigationState(
         when (topLevelDestination) {
             TopLevelDestination.CHATS -> navController.navigateToChats(topLevelNavOptions)
 
-            TopLevelDestination.PLUS_BUTTON -> {
-            }
+            TopLevelDestination.PLUS_BUTTON -> navController.navigateToUsers(topLevelNavOptions)
 
             TopLevelDestination.PROFILE -> {
             }
