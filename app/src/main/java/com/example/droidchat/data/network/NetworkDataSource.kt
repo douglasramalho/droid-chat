@@ -16,7 +16,7 @@ interface NetworkDataSource {
 
     suspend fun uploadProfilePicture(filePath: String): ImageResponse
 
-    suspend fun authenticate(token: String): UserResponse
+    suspend fun authenticate(): UserResponse
 
-    suspend fun getChats(token: String, paginationParams: PaginationParams): PaginatedChatResponse
+    suspend fun getChats(paginationParams: PaginationParams): PaginatedChatResponse
 }

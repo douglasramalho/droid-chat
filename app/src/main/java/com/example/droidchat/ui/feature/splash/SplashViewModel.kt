@@ -34,7 +34,7 @@ class SplashViewModel @Inject constructor(
                 return@launch
             }
 
-            authRepository.authenticate(accessToken).fold(
+            authRepository.authenticate().fold(
                 onSuccess = {
                     _authenticationState.emit(AuthenticationState.UserAuthenticated)
                 },
