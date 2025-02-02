@@ -4,6 +4,7 @@ import com.example.droidchat.data.network.model.AuthRequest
 import com.example.droidchat.data.network.model.CreateAccountRequest
 import com.example.droidchat.data.network.model.ImageResponse
 import com.example.droidchat.data.network.model.PaginatedChatResponse
+import com.example.droidchat.data.network.model.PaginatedUserResponse
 import com.example.droidchat.data.network.model.PaginationParams
 import com.example.droidchat.data.network.model.TokenResponse
 import com.example.droidchat.data.network.model.UserResponse
@@ -19,6 +20,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.http.URLBuilder
 import java.io.File
 import javax.inject.Inject
 
@@ -62,9 +64,23 @@ class NetworkDataSourceImpl @Inject constructor(
     ): PaginatedChatResponse {
         return httpClient.get("conversations") {
             url {
-                parameters.append("offset", paginationParams.offset)
-                parameters.append("limit", paginationParams.limit)
+                appendPaginationParams(paginationParams)
             }
         }.body()
+    }
+
+    override suspend fun getUsers(
+        paginationParams: PaginationParams
+    ): PaginatedUserResponse {
+        return httpClient.get("users") {
+            url {
+                appendPaginationParams(paginationParams)
+            }
+        }.body()
+    }
+
+    private fun URLBuilder.appendPaginationParams(paginationParams: PaginationParams) {
+        parameters.append("offset", paginationParams.offset)
+        parameters.append("limit", paginationParams.limit)
     }
 }
