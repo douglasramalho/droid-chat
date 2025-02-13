@@ -43,6 +43,7 @@
 
     <string name="feature_users_title">Usuários</string>
     <string name="feature_users_empty_list">Nenhum usuário disponível para iniciar uma conversa.</string>
+    <string name="feature_users_error_loading_more">Erro ao carregar mais usuários</string>
 
     <string name="bottom_navigation_item_chats">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>
