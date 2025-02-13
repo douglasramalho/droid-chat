@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -19,8 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.constraintlayout.compose.Visibility
-import coil.compose.AsyncImage
-import com.example.droidchat.R
 import com.example.droidchat.model.Chat
 import com.example.droidchat.ui.preview.ChatPreviewParameterProvider
 import com.example.droidchat.ui.theme.DroidChatTheme
@@ -45,8 +42,8 @@ fun ChatItem(
             lastMessageTimeRef,
             unreadCountRef) = createRefs()
 
-        AsyncImage(
-            model = receiver.profilePictureUrl,
+        RoundedAvatar(
+            imageUri = receiver.profilePictureUrl,
             contentDescription = null,
             modifier = Modifier
                 .clip(CircleShape)
@@ -56,9 +53,6 @@ fun ChatItem(
                     start.linkTo(parent.start)
                     bottom.linkTo(parent.bottom, margin = 16.dp)
                 },
-            placeholder = painterResource(R.drawable.no_profile_image),
-            error = painterResource(R.drawable.no_profile_image),
-            fallback = painterResource(R.drawable.no_profile_image),
         )
 
         Text(

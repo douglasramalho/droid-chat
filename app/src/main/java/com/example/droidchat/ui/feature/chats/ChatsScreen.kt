@@ -1,25 +1,17 @@
 package com.example.droidchat.ui.feature.chats
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
@@ -35,6 +27,8 @@ import com.example.droidchat.model.fake.chat3
 import com.example.droidchat.ui.components.AnimatedContent
 import com.example.droidchat.ui.components.ChatItem
 import com.example.droidchat.ui.components.ChatItemShimmer
+import com.example.droidchat.ui.components.ChatScaffold
+import com.example.droidchat.ui.components.ChatTopAppBar
 import com.example.droidchat.ui.components.GeneralEmptyList
 import com.example.droidchat.ui.components.GeneralError
 import com.example.droidchat.ui.components.PrimaryButton
@@ -61,95 +55,76 @@ fun ChatsScreen(
     chatsListUiState: ChatsViewModel.ChatsListUiState,
     onTryAgainClick: () -> Unit
 ) {
-    Scaffold(
+    ChatScaffold(
         topBar = {
-            TopAppBar(
+            ChatTopAppBar(
                 title = {
                     Text(
-                        text = AnnotatedString.fromHtml(stringResource(R.string.feature_chats_greeting, "Douglas")),
+                        text = AnnotatedString.fromHtml(
+                            stringResource(
+                                R.string.feature_chats_greeting,
+                                "Douglas"
+                            )
+                        ),
                         color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.titleLarge,
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                expandedHeight = 100.dp,
             )
         },
-        containerColor = MaterialTheme.colorScheme.primary,
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .padding(paddingValues)
-                .background(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = MaterialTheme.shapes.extraLarge.copy(
-                        bottomStart = CornerSize(0.dp),
-                        bottomEnd = CornerSize(0.dp),
-                    )
-                )
-                .clip(
-                    shape = MaterialTheme.shapes.extraLarge.copy(
-                        bottomStart = CornerSize(0.dp),
-                        bottomEnd = CornerSize(0.dp),
-                    )
-                )
-                .fillMaxSize(),
-        ) {
-            when (chatsListUiState) {
-                ChatsViewModel.ChatsListUiState.Loading -> {
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                    ) {
-                        repeat(5) { index ->
-                            ChatItemShimmer()
+    ) {
+        when (chatsListUiState) {
+            ChatsViewModel.ChatsListUiState.Loading -> {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                ) {
+                    repeat(5) { index ->
+                        ChatItemShimmer()
 
-                            if (index < 4) {
-                                HorizontalDivider(
-                                    color = Grey1
+                        if (index < 4) {
+                            HorizontalDivider(
+                                color = Grey1
+                            )
+                        }
+                    }
+                }
+            }
+
+            is ChatsViewModel.ChatsListUiState.Success -> {
+                when (chatsListUiState.chats.isNotEmpty()) {
+                    true -> {
+                        ChatsListContent(chatsListUiState.chats)
+                    }
+
+                    false -> {
+                        GeneralEmptyList(
+                            message = stringResource(R.string.feature_chats_empty_list),
+                            resource = {
+                                AnimatedContent(
+                                    resId = R.raw.animation_empty_list
                                 )
                             }
-                        }
+                        )
                     }
                 }
 
-                is ChatsViewModel.ChatsListUiState.Success -> {
-                    when (chatsListUiState.chats.isNotEmpty()) {
-                        true -> {
-                            ChatsListContent(chatsListUiState.chats)
-                        }
+            }
 
-                        false -> {
-                            GeneralEmptyList(
-                                message = stringResource(R.string.feature_chats_empty_list),
-                                resource = {
-                                    AnimatedContent(
-                                        resId = R.raw.animation_empty_list
-                                    )
-                                }
-                            )
-                        }
+            ChatsViewModel.ChatsListUiState.Error -> {
+                GeneralError(
+                    title = stringResource(R.string.common_generic_error_title),
+                    message = stringResource(R.string.common_generic_error_message),
+                    resource = {
+                        AnimatedContent()
+                    },
+                    action = {
+                        PrimaryButton(
+                            text = stringResource(R.string.common_try_again),
+                            onClick = onTryAgainClick
+                        )
                     }
-
-                }
-
-                ChatsViewModel.ChatsListUiState.Error -> {
-                    GeneralError(
-                        title = stringResource(R.string.common_generic_error_title),
-                        message = stringResource(R.string.common_generic_error_message),
-                        resource = {
-                            AnimatedContent()
-                        },
-                        action = {
-                            PrimaryButton(
-                                text = stringResource(R.string.common_try_again),
-                                onClick = onTryAgainClick
-                            )
-                        }
-                    )
-                }
+                )
             }
         }
     }
