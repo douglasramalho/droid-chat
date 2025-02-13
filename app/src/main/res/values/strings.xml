@@ -41,6 +41,9 @@
     <string name="feature_chats_greeting"><![CDATA[Olá, <b>%1$s</b>]]></string>
     <string name="feature_chats_empty_list">Lista de conversas vazia.\nComece uma nova conversa clicando no botão + abaixo.</string>
 
+    <string name="feature_users_title">Usuários</string>
+    <string name="feature_users_empty_list">Nenhum usuário disponível para iniciar uma conversa.</string>
+
     <string name="bottom_navigation_item_chats">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>
 
