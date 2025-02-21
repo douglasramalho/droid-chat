@@ -10,9 +10,6 @@ import com.example.droidchat.data.network.model.TokenResponse
 import com.example.droidchat.data.network.model.UserResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.auth.Auth
-import io.ktor.client.plugins.auth.providers.BearerAuthProvider
-import io.ktor.client.plugins.plugin
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
@@ -37,9 +34,7 @@ class NetworkDataSourceImpl @Inject constructor(
     override suspend fun signIn(request: AuthRequest): TokenResponse {
         return httpClient.post("signin") {
             setBody(request)
-        }.body<TokenResponse>().also {
-            httpClient.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>().first().clearToken()
-        }
+        }.body<TokenResponse>()
     }
 
     override suspend fun uploadProfilePicture(filePath: String): ImageResponse {
