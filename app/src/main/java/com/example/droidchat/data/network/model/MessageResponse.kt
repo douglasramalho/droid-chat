@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PaginatedMessageResponse(
-    val users: List<MessageResponse>,
+    val messages: List<MessageResponse>,
     val hasMore: Boolean,
     val total: Int,
 )
