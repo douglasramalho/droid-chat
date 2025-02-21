@@ -4,6 +4,7 @@ import com.example.droidchat.data.network.model.AuthRequest
 import com.example.droidchat.data.network.model.CreateAccountRequest
 import com.example.droidchat.data.network.model.ImageResponse
 import com.example.droidchat.data.network.model.PaginatedChatResponse
+import com.example.droidchat.data.network.model.PaginatedMessageResponse
 import com.example.droidchat.data.network.model.PaginatedUserResponse
 import com.example.droidchat.data.network.model.PaginationParams
 import com.example.droidchat.data.network.model.TokenResponse
@@ -68,6 +69,17 @@ class NetworkDataSourceImpl @Inject constructor(
         paginationParams: PaginationParams
     ): PaginatedUserResponse {
         return httpClient.get("users") {
+            url {
+                appendPaginationParams(paginationParams)
+            }
+        }.body()
+    }
+
+    override suspend fun getMessages(
+        receiverId: Int,
+        paginationParams: PaginationParams
+    ): PaginatedMessageResponse {
+        return httpClient.get("messages/$receiverId") {
             url {
                 appendPaginationParams(paginationParams)
             }

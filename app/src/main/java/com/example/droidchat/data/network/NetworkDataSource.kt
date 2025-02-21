@@ -4,6 +4,7 @@ import com.example.droidchat.data.network.model.AuthRequest
 import com.example.droidchat.data.network.model.CreateAccountRequest
 import com.example.droidchat.data.network.model.ImageResponse
 import com.example.droidchat.data.network.model.PaginatedChatResponse
+import com.example.droidchat.data.network.model.PaginatedMessageResponse
 import com.example.droidchat.data.network.model.PaginatedUserResponse
 import com.example.droidchat.data.network.model.PaginationParams
 import com.example.droidchat.data.network.model.TokenResponse
@@ -22,4 +23,6 @@ interface NetworkDataSource {
     suspend fun getChats(paginationParams: PaginationParams): PaginatedChatResponse
 
     suspend fun getUsers(paginationParams: PaginationParams): PaginatedUserResponse
+
+    suspend fun getMessages(receiverId: Int, paginationParams: PaginationParams): PaginatedMessageResponse
 }
