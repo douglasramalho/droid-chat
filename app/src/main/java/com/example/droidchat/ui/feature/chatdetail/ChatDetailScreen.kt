@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
@@ -51,31 +52,18 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun ChatDetailRoute(
+    viewModel: ChatDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
 ) {
-    val pagingChatMessages = flowOf(
-        PagingData.from(
-            listOf(
-                chatMessage5,
-                chatMessage4,
-                chatMessage3,
-                chatMessage2,
-                chatMessage1
-            ),
-            sourceLoadStates = LoadStates(
-                refresh = LoadState.NotLoading(true),
-                prepend = LoadState.NotLoading(false),
-                append = LoadState.NotLoading(false)
-            )
-        )
-    ).collectAsLazyPagingItems()
+    val pagingChatMessages = viewModel.pagingChatMessages.collectAsLazyPagingItems()
+    val messageText = viewModel.messageText
 
     ChatDetailScreen(
         pagingChatMessages = pagingChatMessages,
-        messageText = "",
+        messageText = messageText,
         onNavigationIconClicked = navigateBack,
-        onMessageChange = {},
-        onSendClicked = {},
+        onMessageChange = viewModel::onMessageChange,
+        onSendClicked = viewModel::onSendMessageClicked,
     )
 }
 
