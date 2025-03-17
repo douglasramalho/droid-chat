@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
@@ -38,6 +40,7 @@ import com.example.droidchat.model.fake.chatMessage2
 import com.example.droidchat.model.fake.chatMessage3
 import com.example.droidchat.model.fake.chatMessage4
 import com.example.droidchat.model.fake.chatMessage5
+import com.example.droidchat.model.fake.user2
 import com.example.droidchat.ui.components.AnimatedContent
 import com.example.droidchat.ui.components.ChatMessageBubble
 import com.example.droidchat.ui.components.ChatMessageTextField
@@ -57,10 +60,12 @@ fun ChatDetailRoute(
 ) {
     val pagingChatMessages = viewModel.pagingChatMessages.collectAsLazyPagingItems()
     val messageText = viewModel.messageText
+    val getUserUiState by viewModel.getUserUiState.collectAsStateWithLifecycle()
 
     ChatDetailScreen(
         pagingChatMessages = pagingChatMessages,
         messageText = messageText,
+        getUserUiState = getUserUiState,
         onNavigationIconClicked = navigateBack,
         onMessageChange = viewModel::onMessageChange,
         onSendClicked = viewModel::onSendMessageClicked,
@@ -72,6 +77,7 @@ fun ChatDetailRoute(
 fun ChatDetailScreen(
     pagingChatMessages: LazyPagingItems<ChatMessage>,
     messageText: String,
+    getUserUiState: ChatDetailViewModel.GetUserUiState,
     onNavigationIconClicked: () -> Unit,
     onMessageChange: (String) -> Unit,
     onSendClicked: () -> Unit,
@@ -83,29 +89,42 @@ fun ChatDetailScreen(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        RoundedAvatar(
-                            imageUri = null,
-                            contentDescription = null,
-                            size = 42.dp
-                        )
+                        when (getUserUiState) {
+                            ChatDetailViewModel.GetUserUiState.Loading -> {
+                                CircularProgressIndicator(
+                                    color = MaterialTheme.colorScheme.inverseOnSurface,
+                                )
+                            }
 
-                        Column(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                        ) {
-                            Text(
-                                text = "João",
-                                color = MaterialTheme.colorScheme.inverseOnSurface,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1,
-                                style = MaterialTheme.typography.titleMedium,
-                            )
+                            is ChatDetailViewModel.GetUserUiState.Success -> {
+                                RoundedAvatar(
+                                    imageUri = getUserUiState.user.profilePictureUrl,
+                                    contentDescription = null,
+                                    size = 42.dp
+                                )
 
-                            Text(
-                                text = "Online",
-                                color = MaterialTheme.colorScheme.inverseOnSurface,
-                                style = MaterialTheme.typography.labelMedium,
-                            )
+                                Column(
+                                    modifier = Modifier
+                                        .padding(horizontal = 16.dp)
+                                ) {
+                                    Text(
+                                        text = getUserUiState.user.firstName,
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        overflow = TextOverflow.Ellipsis,
+                                        maxLines = 1,
+                                        style = MaterialTheme.typography.titleMedium,
+                                    )
+
+                                    Text(
+                                        text = "Online",
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        style = MaterialTheme.typography.labelMedium,
+                                    )
+                                }
+                            }
+
+                            is ChatDetailViewModel.GetUserUiState.Error -> {
+                            }
                         }
                     }
                 },
@@ -271,6 +290,7 @@ private fun ChatDetailScreenPreview() {
         ChatDetailScreen(
             pagingChatMessages = pagingChatMessages,
             messageText = "",
+            getUserUiState = ChatDetailViewModel.GetUserUiState.Success(user2),
             onNavigationIconClicked = {},
             onMessageChange = {},
             onSendClicked = {},

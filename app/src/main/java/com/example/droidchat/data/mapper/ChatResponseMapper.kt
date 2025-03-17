@@ -7,7 +7,7 @@ import com.example.droidchat.model.User
 fun PaginatedChatResponse.asDomainModel(selfUserId: Int?): List<Chat> = this.chats.map { chatResponse ->
     Chat(
         id = chatResponse.id,
-        lastMessage = chatResponse.lastMassage,
+        lastMessage = chatResponse.lastMessage,
         members = chatResponse.members.map { userResponse ->
             User(
                 id = userResponse.id,

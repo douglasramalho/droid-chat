@@ -14,7 +14,7 @@ data class PaginatedChatResponse(
 @Serializable
 data class ChatResponse(
     val id: Int,
-    val lastMassage: String?,
+    val lastMessage: String?,
     val members: List<UserResponse>,
     val unreadCount: Int,
     val createdAt: Long,
