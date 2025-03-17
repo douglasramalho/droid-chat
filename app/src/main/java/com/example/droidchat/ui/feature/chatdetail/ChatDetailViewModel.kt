@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -133,6 +134,33 @@ class ChatDetailViewModel @Inject constructor(
     fun resetShowErrorState() {
         viewModelScope.launch {
             _showError.send(false)
+        }
+    }
+
+    fun onResume() {
+        viewModelScope.launch {
+            chatRepository.connectWebSocket().fold(
+                onSuccess = {
+                    chatRepository.observeSocketMessageResultFlow()
+                        .launchIn(viewModelScope)
+                },
+                onFailure = {
+
+                }
+            )
+        }
+    }
+
+    fun onPause() {
+        viewModelScope.launch {
+            chatRepository.disconnectWebsocket()
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.launch {
+            chatRepository.disconnectWebsocket()
         }
     }
 

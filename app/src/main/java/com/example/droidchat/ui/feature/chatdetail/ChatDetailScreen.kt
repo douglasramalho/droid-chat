@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
@@ -75,6 +76,14 @@ fun ChatDetailRoute(
     LaunchedEffect(Unit) {
         viewModel.showError.collect {
             showErrorDialog = it
+        }
+    }
+
+    LifecycleResumeEffect(Unit) {
+        viewModel.onResume()
+
+        onPauseOrDispose {
+            viewModel.onPause()
         }
     }
 
