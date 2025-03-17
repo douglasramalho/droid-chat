@@ -12,6 +12,7 @@ data class PaginatedMessageResponse(
 @Serializable
 data class MessageResponse(
     val id: Int,
+    val messageId: String,
     val isUnread: Boolean,
     val receiverId: Int,
     val senderId: Int,

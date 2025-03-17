@@ -23,6 +23,7 @@ import io.ktor.client.request.headers
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.json.Json
@@ -40,7 +41,9 @@ object ApiModule {
         return HttpClient(CIO) {
             expectSuccess = true
 
-            install(WebSockets)
+            install(WebSockets) {
+                contentConverter = KotlinxWebsocketSerializationConverter(Json)
+            }
 
             install(Logging) {
                 logger = Logger.SIMPLE
