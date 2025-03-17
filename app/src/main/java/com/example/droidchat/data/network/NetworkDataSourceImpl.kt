@@ -65,6 +65,10 @@ class NetworkDataSourceImpl @Inject constructor(
         }.body()
     }
 
+    override suspend fun getUser(userId: Int): UserResponse {
+        return httpClient.get("users/$userId").body()
+    }
+
     override suspend fun getUsers(
         paginationParams: PaginationParams
     ): PaginatedUserResponse {

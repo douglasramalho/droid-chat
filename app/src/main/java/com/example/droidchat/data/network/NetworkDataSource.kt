@@ -22,6 +22,8 @@ interface NetworkDataSource {
 
     suspend fun getChats(paginationParams: PaginationParams): PaginatedChatResponse
 
+    suspend fun getUser(userId: Int): UserResponse
+
     suspend fun getUsers(paginationParams: PaginationParams): PaginatedUserResponse
 
     suspend fun getMessages(receiverId: Int, paginationParams: PaginationParams): PaginatedMessageResponse
