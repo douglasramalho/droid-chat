@@ -18,6 +18,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.plugins.plugin
+import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.headers
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
@@ -38,6 +39,8 @@ object ApiModule {
     ): HttpClient {
         return HttpClient(CIO) {
             expectSuccess = true
+
+            install(WebSockets)
 
             install(Logging) {
                 logger = Logger.SIMPLE
