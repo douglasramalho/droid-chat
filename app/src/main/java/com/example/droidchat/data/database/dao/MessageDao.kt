@@ -9,12 +9,19 @@ import com.example.droidchat.data.database.entity.MessageEntity
 
 @Dao
 interface MessageDao {
-    @Query("SELECT * FROM messages WHERE receiver_id = :receiverId ORDER BY timestamp DESC")
+    @Query("""
+    SELECT * FROM messages 
+    WHERE (receiver_id = :receiverId OR sender_id = :receiverId) 
+    ORDER BY timestamp DESC
+    """)
     fun getPagedMessages(receiverId: Int): PagingSource<Int, MessageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMessages(messages: List<MessageEntity>)
 
-    @Query("DELETE FROM messages WHERE receiver_id = :receiverId")
+    @Query("""
+    DELETE FROM messages 
+    WHERE receiver_id = :receiverId OR sender_id = :receiverId
+    """)
     suspend fun clearMessages(receiverId: Int)
 }

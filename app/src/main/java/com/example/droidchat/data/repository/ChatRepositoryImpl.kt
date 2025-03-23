@@ -98,7 +98,7 @@ class ChatRepositoryImpl @Inject constructor(
                         val messageEntity = MessageEntity(
                             id = messageResponse.id,
                             isUnread = messageResponse.isUnread,
-                            senderId = selfUser?.id ?: 0,
+                            senderId = messageResponse.senderId,
                             receiverId = messageResponse.receiverId,
                             text = messageResponse.text,
                             timestamp = messageResponse.timestamp
