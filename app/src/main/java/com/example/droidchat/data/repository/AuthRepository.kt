@@ -2,8 +2,12 @@ package com.example.droidchat.data.repository
 
 import com.example.droidchat.model.CreateAccount
 import com.example.droidchat.model.Image
+import com.example.droidchat.model.User
+import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
+
+    val currentUserFlow: Flow<User>
 
     suspend fun getAccessToken(): String?
 

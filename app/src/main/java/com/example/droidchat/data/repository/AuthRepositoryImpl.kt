@@ -3,13 +3,18 @@ package com.example.droidchat.data.repository
 import com.example.droidchat.data.di.IoDispatcher
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.manager.token.TokenManager
+import com.example.droidchat.data.mapper.asDomainModel
 import com.example.droidchat.data.network.NetworkDataSource
 import com.example.droidchat.data.network.model.AuthRequest
 import com.example.droidchat.data.network.model.CreateAccountRequest
 import com.example.droidchat.model.CreateAccount
 import com.example.droidchat.model.Image
+import com.example.droidchat.model.User
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -19,6 +24,14 @@ class AuthRepositoryImpl @Inject constructor(
     private val selfUserManager: SelfUserManager,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : AuthRepository {
+
+    override val currentUserFlow: Flow<User>
+        get() = selfUserManager
+            .selfUserFlow
+            .flowOn(ioDispatcher)
+            .map {
+                it.asDomainModel()
+            }
 
     override suspend fun getAccessToken(): String? {
         return tokenManager.accessToken.firstOrNull()
@@ -57,6 +70,8 @@ class AuthRepositoryImpl @Inject constructor(
                 )
 
                 tokenManager.saveAccessToken(tokenResponse.token)
+
+                authenticate().getOrThrow()
             }
         }
     }
