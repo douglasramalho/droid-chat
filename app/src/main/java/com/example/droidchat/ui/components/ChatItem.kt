@@ -1,6 +1,7 @@
 package com.example.droidchat.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,14 +26,18 @@ import com.example.droidchat.ui.theme.DroidChatTheme
 @Composable
 fun ChatItem(
     chat: Chat,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val receiver = remember(chat.members) {
-        chat.members.first { it.self.not() }
+        chat.otherMember
     }
 
     ConstraintLayout(
         modifier = modifier
+            .clickable {
+                onClick()
+            }
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
     ) {
@@ -128,7 +133,8 @@ private fun ChatItemPreview(
 ) {
     DroidChatTheme {
         ChatItem(
-            chat = chat
+            chat = chat,
+            onClick = {}
         )
     }
 }

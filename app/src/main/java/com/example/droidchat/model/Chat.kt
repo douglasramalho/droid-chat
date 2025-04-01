@@ -6,4 +6,6 @@ data class Chat(
     val members: List<User>,
     val unreadCount: Int,
     val timestamp: String,
-)
+) {
+    val otherMember = members.first { it.self.not() }
+}

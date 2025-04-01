@@ -88,7 +88,11 @@ fun ChatNavHost(
             )
         }
         composable<Route.ChatsRoute> {
-            ChatsRoute()
+            ChatsRoute(
+                navigateToChatDetail = { chat ->
+                    navController.navigate(Route.ChatDetailRoute(chat.otherMember.id))
+                }
+            )
         }
         composable<Route.UsersRoute> {
             UsersRoute(

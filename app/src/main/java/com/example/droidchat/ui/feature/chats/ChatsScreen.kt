@@ -37,15 +37,17 @@ import com.example.droidchat.ui.theme.Grey1
 
 @Composable
 fun ChatsRoute(
-    viewModel: ChatsViewModel = hiltViewModel()
+    viewModel: ChatsViewModel = hiltViewModel(),
+    navigateToChatDetail: (Chat) -> Unit
 ) {
     val chatsListUiState by viewModel.chatsListUiState.collectAsStateWithLifecycle()
 
     ChatsScreen(
         chatsListUiState = chatsListUiState,
         onTryAgainClick = {
-            viewModel.getChats()
-        }
+            viewModel.getChats(isRefresh = true)
+        },
+        onChatClick = navigateToChatDetail,
     )
 }
 
@@ -53,7 +55,8 @@ fun ChatsRoute(
 @Composable
 fun ChatsScreen(
     chatsListUiState: ChatsViewModel.ChatsListUiState,
-    onTryAgainClick: () -> Unit
+    onTryAgainClick: () -> Unit,
+    onChatClick: (Chat) -> Unit,
 ) {
     ChatScaffold(
         topBar = {
@@ -94,7 +97,10 @@ fun ChatsScreen(
             is ChatsViewModel.ChatsListUiState.Success -> {
                 when (chatsListUiState.chats.isNotEmpty()) {
                     true -> {
-                        ChatsListContent(chatsListUiState.chats)
+                        ChatsListContent(
+                            chats = chatsListUiState.chats,
+                            onChatClick = onChatClick,
+                        )
                     }
 
                     false -> {
@@ -131,12 +137,20 @@ fun ChatsScreen(
 }
 
 @Composable
-fun ChatsListContent(chats: List<Chat>) {
+fun ChatsListContent(
+    chats: List<Chat>,
+    onChatClick: (Chat) -> Unit
+) {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         itemsIndexed(chats) { index, chat ->
-            ChatItem(chat)
+            ChatItem(
+                chat = chat,
+                onClick = {
+                    onChatClick(chat)
+                }
+            )
 
             if (index < chats.lastIndex) {
                 HorizontalDivider(
@@ -154,6 +168,7 @@ private fun ChatsScreenLoadingPreview() {
         ChatsScreen(
             chatsListUiState = ChatsViewModel.ChatsListUiState.Loading,
             onTryAgainClick = {},
+            onChatClick = {},
         )
     }
 }
@@ -171,6 +186,7 @@ private fun ChatsScreenSuccessPreview() {
                 ),
             ),
             onTryAgainClick = {},
+            onChatClick = {},
         )
     }
 }
@@ -184,6 +200,7 @@ private fun ChatsScreenSuccessEmptyPreview() {
                 chats = emptyList(),
             ),
             onTryAgainClick = {},
+            onChatClick = {},
         )
     }
 }
@@ -195,6 +212,7 @@ private fun ChatsScreenErrorPreview() {
         ChatsScreen(
             chatsListUiState = ChatsViewModel.ChatsListUiState.Error,
             onTryAgainClick = {},
+            onChatClick = {},
         )
     }
 }
