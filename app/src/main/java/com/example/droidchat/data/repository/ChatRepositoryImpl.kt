@@ -22,6 +22,7 @@ import com.example.droidchat.model.ChatMessage
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
@@ -74,7 +75,7 @@ class ChatRepositoryImpl @Inject constructor(
             it.map { messageEntity ->
                 messageEntity.asDomainModel(selfUserId = selfUser?.id)
             }
-        }
+        }.flowOn(ioDispatcher)
     }
 
     override suspend fun sendMessage(receiverId: Int, message: String): Result<Unit> {
@@ -110,7 +111,7 @@ class ChatRepositoryImpl @Inject constructor(
                     else -> {
                     }
                 }
-            }
+            }.flowOn(ioDispatcher)
     }
 
     override suspend fun disconnectWebsocket() {
