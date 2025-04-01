@@ -48,6 +48,7 @@
     <string name="feature_chat_detail_empty_list">Envie uma mensagem para iniciar a conversa</string>
     <string name="feature_chat_detail_error_loading_more">Erro ao carregar mais mensagens</string>
     <string name="feature_chat_detail_text_field_placeholder">Mensagem</string>
+    <string name="feature_chat_detail_online_status">Online</string>
 
     <string name="bottom_navigation_item_chats">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>

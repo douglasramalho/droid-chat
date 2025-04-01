@@ -64,6 +64,7 @@ fun ChatDetailRoute(
     viewModel: ChatDetailViewModel = hiltViewModel(),
     navigateBack: () -> Unit,
 ) {
+    val isUserOnline by viewModel.isUserOnline.collectAsStateWithLifecycle()
     val pagingChatMessages = viewModel.pagingChatMessages.collectAsLazyPagingItems()
     val messageText = viewModel.messageText
     val getUserUiState by viewModel.getUserUiState.collectAsStateWithLifecycle()
@@ -103,6 +104,7 @@ fun ChatDetailRoute(
     }
 
     ChatDetailScreen(
+        isUserOnline = isUserOnline,
         pagingChatMessages = pagingChatMessages,
         messageText = messageText,
         getUserUiState = getUserUiState,
@@ -115,6 +117,7 @@ fun ChatDetailRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatDetailScreen(
+    isUserOnline: Boolean,
     pagingChatMessages: LazyPagingItems<ChatMessage>,
     messageText: String,
     getUserUiState: ChatDetailViewModel.GetUserUiState,
@@ -155,11 +158,13 @@ fun ChatDetailScreen(
                                         style = MaterialTheme.typography.titleMedium,
                                     )
 
-                                    Text(
-                                        text = "Online",
-                                        color = MaterialTheme.colorScheme.inverseOnSurface,
-                                        style = MaterialTheme.typography.labelMedium,
-                                    )
+                                    if (isUserOnline) {
+                                        Text(
+                                            text = stringResource(R.string.feature_chat_detail_online_status),
+                                            color = MaterialTheme.colorScheme.inverseOnSurface,
+                                            style = MaterialTheme.typography.labelMedium,
+                                        )
+                                    }
                                 }
                             }
 
@@ -328,6 +333,7 @@ private fun ChatDetailScreenPreview() {
         ).collectAsLazyPagingItems()
 
         ChatDetailScreen(
+            isUserOnline = true,
             pagingChatMessages = pagingChatMessages,
             messageText = "",
             getUserUiState = ChatDetailViewModel.GetUserUiState.Success(user2),

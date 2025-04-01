@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import androidx.paging.LoadState
 import androidx.paging.cachedIn
+import com.example.droidchat.data.network.ws.SocketMessageResult
 import com.example.droidchat.data.repository.ChatRepository
 import com.example.droidchat.data.repository.UserRepository
 import com.example.droidchat.model.User
@@ -19,10 +20,12 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -41,6 +44,9 @@ class ChatDetailViewModel @Inject constructor(
     private val chatDetailRoute = savedStateHandle.toRoute<Route.ChatDetailRoute>()
 
     private val sendMessageFlow = MutableSharedFlow<Unit>()
+
+    private val _isUserOnline = MutableStateFlow(false)
+    val isUserOnline = _isUserOnline.asStateFlow()
 
     private val _getUserUiState = MutableStateFlow<GetUserUiState>(GetUserUiState.Loading)
     val getUserUiState = _getUserUiState
@@ -151,12 +157,24 @@ class ChatDetailViewModel @Inject constructor(
             chatRepository.connectWebSocket().fold(
                 onSuccess = {
                     chatRepository.observeSocketMessageResultFlow()
+                        .onEach {
+                            updateUserOnlineInfo(it)
+                        }
                         .launchIn(viewModelScope)
                 },
                 onFailure = {
 
                 }
             )
+        }
+    }
+
+    private fun updateUserOnlineInfo(socketMessageResult: SocketMessageResult) {
+        if (socketMessageResult is SocketMessageResult.ActiveUsersChanged) {
+            _isUserOnline.update {
+                socketMessageResult.activeUserIdsResponse.activeUserIds
+                    .contains(chatDetailRoute.userId)
+            }
         }
     }
 
