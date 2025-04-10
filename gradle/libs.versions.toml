@@ -30,6 +30,7 @@ securityCrypto = "1.1.0-alpha06"
 constraintLayoutCompose = "1.1.0"
 paging = "3.3.6"
 room = "2.6.1"
+googleServices = "4.4.2"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -90,3 +91,4 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 protoBuf = { id = "com.google.protobuf", version.ref = "protoBuf" }
+firebase = { id = "com.google.gms.google-services", version.ref = "googleServices" }

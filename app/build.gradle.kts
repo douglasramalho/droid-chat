@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.protoBuf)
+    alias(libs.plugins.firebase)
 }
 
 android {

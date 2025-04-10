@@ -1,12 +1,14 @@
 package com.example.droidchat.data.repository
 
 import com.example.droidchat.data.di.IoDispatcher
+import com.example.droidchat.data.manager.notification.NotificationManager
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.manager.token.TokenManager
 import com.example.droidchat.data.mapper.asDomainModel
 import com.example.droidchat.data.network.NetworkDataSource
 import com.example.droidchat.data.network.model.AuthRequest
 import com.example.droidchat.data.network.model.CreateAccountRequest
+import com.example.droidchat.data.network.model.RegisterTokenRequest
 import com.example.droidchat.model.CreateAccount
 import com.example.droidchat.model.Image
 import com.example.droidchat.model.User
@@ -22,6 +24,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource,
     private val tokenManager: TokenManager,
     private val selfUserManager: SelfUserManager,
+    private val notificationManager: NotificationManager,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : AuthRepository {
 
@@ -102,6 +105,13 @@ class AuthRepositoryImpl @Inject constructor(
                     lastName = userResponse.lastName,
                     profilePictureUrl = userResponse.profilePictureUrl ?: "",
                     username = userResponse.username,
+                )
+
+                val token = notificationManager.getToken()
+                networkDataSource.registerNotificationToken(
+                    registerTokenRequest = RegisterTokenRequest(
+                        token = token
+                    )
                 )
             }
         }
