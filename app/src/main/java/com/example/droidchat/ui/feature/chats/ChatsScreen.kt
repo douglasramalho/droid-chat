@@ -34,6 +34,7 @@ import com.example.droidchat.ui.components.ChatTopAppBar
 import com.example.droidchat.ui.components.GeneralEmptyList
 import com.example.droidchat.ui.components.GeneralError
 import com.example.droidchat.ui.components.PrimaryButton
+import com.example.droidchat.ui.notification.NotificationPermissionHandler
 import com.example.droidchat.ui.theme.DroidChatTheme
 import com.example.droidchat.ui.theme.Grey1
 
@@ -53,6 +54,8 @@ fun ChatsRoute(
         },
         onChatClick = navigateToChatDetail,
     )
+
+    NotificationPermissionHandler()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
