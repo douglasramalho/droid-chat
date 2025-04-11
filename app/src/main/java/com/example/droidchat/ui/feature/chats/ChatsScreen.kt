@@ -1,5 +1,9 @@
 package com.example.droidchat.ui.feature.chats
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -11,7 +15,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.fromHtml
@@ -33,6 +41,7 @@ import com.example.droidchat.ui.components.ChatScaffold
 import com.example.droidchat.ui.components.ChatTopAppBar
 import com.example.droidchat.ui.components.GeneralEmptyList
 import com.example.droidchat.ui.components.GeneralError
+import com.example.droidchat.ui.components.NotificationPermanentlyDeniedInfo
 import com.example.droidchat.ui.components.PrimaryButton
 import com.example.droidchat.ui.notification.NotificationPermissionHandler
 import com.example.droidchat.ui.theme.DroidChatTheme
@@ -41,21 +50,42 @@ import com.example.droidchat.ui.theme.Grey1
 @Composable
 fun ChatsRoute(
     viewModel: ChatsViewModel = hiltViewModel(),
-    navigateToChatDetail: (Chat) -> Unit
+    navigateToChatDetail: (Chat) -> Unit,
+    context: Context = LocalContext.current
 ) {
     val user by viewModel.currentUserFlow.collectAsStateWithLifecycle()
     val chatsListUiState by viewModel.chatsListUiState.collectAsStateWithLifecycle()
 
+    var showPermissionPermanentlyDeniedInfo by remember {
+        mutableStateOf(false)
+    }
+
     ChatsScreen(
         user = user,
         chatsListUiState = chatsListUiState,
+        showPermissionPermanentlyDeniedInfo = showPermissionPermanentlyDeniedInfo,
+        onDismissClickPermanentlyDeniedInfo = {
+            showPermissionPermanentlyDeniedInfo = false
+        },
+        onGoToSettingsClick = {
+            context.startActivity(
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", context.packageName, null)
+                }
+            )
+            showPermissionPermanentlyDeniedInfo = false
+        },
         onTryAgainClick = {
             viewModel.getChats(isRefresh = true)
         },
         onChatClick = navigateToChatDetail,
     )
 
-    NotificationPermissionHandler()
+    NotificationPermissionHandler(
+        onPermissionPermanentlyDenied = {
+            showPermissionPermanentlyDeniedInfo = true
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,6 +93,9 @@ fun ChatsRoute(
 fun ChatsScreen(
     user: User?,
     chatsListUiState: ChatsViewModel.ChatsListUiState,
+    showPermissionPermanentlyDeniedInfo: Boolean,
+    onDismissClickPermanentlyDeniedInfo: () -> Unit,
+    onGoToSettingsClick: () -> Unit,
     onTryAgainClick: () -> Unit,
     onChatClick: (Chat) -> Unit,
 ) {
@@ -107,6 +140,9 @@ fun ChatsScreen(
                     true -> {
                         ChatsListContent(
                             chats = chatsListUiState.chats,
+                            showPermissionPermanentlyDeniedInfo = showPermissionPermanentlyDeniedInfo,
+                            onDismissClickPermanentlyDeniedInfo = onDismissClickPermanentlyDeniedInfo,
+                            onGoToSettingsClick = onGoToSettingsClick,
                             onChatClick = onChatClick,
                         )
                     }
@@ -147,12 +183,28 @@ fun ChatsScreen(
 @Composable
 fun ChatsListContent(
     chats: List<Chat>,
+    showPermissionPermanentlyDeniedInfo: Boolean,
+    onDismissClickPermanentlyDeniedInfo: () -> Unit,
+    onGoToSettingsClick: () -> Unit,
     onChatClick: (Chat) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        itemsIndexed(chats) { index, chat ->
+        if (showPermissionPermanentlyDeniedInfo) {
+            item(key = "notification_info") {
+                NotificationPermanentlyDeniedInfo(
+                    onDismissClick = onDismissClickPermanentlyDeniedInfo,
+                    onGoToSettingsClick = onGoToSettingsClick,
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                )
+            }
+        }
+
+        itemsIndexed(chats, key = { _, item ->
+            item.id
+        }) { index, chat ->
             ChatItem(
                 chat = chat,
                 onClick = {
@@ -176,6 +228,9 @@ private fun ChatsScreenLoadingPreview() {
         ChatsScreen(
             user = user1,
             chatsListUiState = ChatsViewModel.ChatsListUiState.Loading,
+            showPermissionPermanentlyDeniedInfo = false,
+            onDismissClickPermanentlyDeniedInfo = {},
+            onGoToSettingsClick = {},
             onTryAgainClick = {},
             onChatClick = {},
         )
@@ -195,6 +250,9 @@ private fun ChatsScreenSuccessPreview() {
                     chat3,
                 ),
             ),
+            showPermissionPermanentlyDeniedInfo = true,
+            onDismissClickPermanentlyDeniedInfo = {},
+            onGoToSettingsClick = {},
             onTryAgainClick = {},
             onChatClick = {},
         )
@@ -210,6 +268,9 @@ private fun ChatsScreenSuccessEmptyPreview() {
             chatsListUiState = ChatsViewModel.ChatsListUiState.Success(
                 chats = emptyList(),
             ),
+            showPermissionPermanentlyDeniedInfo = false,
+            onDismissClickPermanentlyDeniedInfo = {},
+            onGoToSettingsClick = {},
             onTryAgainClick = {},
             onChatClick = {},
         )
@@ -223,6 +284,9 @@ private fun ChatsScreenErrorPreview() {
         ChatsScreen(
             user = user1,
             chatsListUiState = ChatsViewModel.ChatsListUiState.Error,
+            showPermissionPermanentlyDeniedInfo = false,
+            onDismissClickPermanentlyDeniedInfo = {},
+            onGoToSettingsClick = {},
             onTryAgainClick = {},
             onChatClick = {},
         )

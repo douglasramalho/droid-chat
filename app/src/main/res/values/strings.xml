@@ -9,10 +9,14 @@
     <string name="common_add_profile_photo_optimizing">Otimizando…</string>
     <string name="common_take_photo">Tirar foto</string>
     <string name="common_upload_photo">Galeria</string>
+    <string name="common_close">Fechar</string>
 
     <string name="notification_chat_messages_channel_name">Chat Messages</string>
     <string name="notification_request_permission_title">Permita notificações para não perder nenhuma mensagem</string>
     <string name="notification_request_permission_message">Receba alertas sempre que alguém te enviar uma nova mensagem. Assim, você fica por dentro das conversas em tempo real, mesmo com o app fechado.</string>
+    <string name="notification_request_permission_denied_title">Não perca nenhuma mensagem</string>
+    <string name="notification_request_permission_denied_message">Para continuar recebendo avisos de novas mensagens, ative as notificações do app manualmente nas configurações do seu dispositivo.</string>
+    <string name="notification_turn_on_text">Ativar</string>
 
     <string name="error_message_invalid_username_or_password">E-mail ou senha incorretos</string>
     <string name="error_message_profile_picture_uploading_failed">Erro ao fazer upload da foto de perfil, tente novamente (formatos aceitos: jpg, jpeg, png)</string>
