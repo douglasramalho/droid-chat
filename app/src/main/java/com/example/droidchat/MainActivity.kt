@@ -6,6 +6,9 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.NavController
+import com.example.droidchat.navigation.Route
+import com.example.droidchat.navigation.rememberDroidChatNavigationState
 import com.example.droidchat.ui.ChatApp
 import com.example.droidchat.ui.theme.DroidChatTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,19 +16,37 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         Log.d("MainActivity", "onCreate: ${intent.data}")
         setContent {
             DroidChatTheme {
-                ChatApp()
+                val navigationState = rememberDroidChatNavigationState()
+                navController = navigationState.navController
+                ChatApp(
+                    navigationState = navigationState,
+                )
             }
         }
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        Log.d("MainActivity", "onNewIntent: ${intent.data}")
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        if (intent.action == Intent.ACTION_VIEW && intent.data != null && intent.data!!.scheme == "droidchat") {
+            val data = intent.data!!
+            when (data.host) {
+                "chat_detail" -> {
+                    val userId = data.lastPathSegment?.toInt() ?: return
+                    navController.navigate(Route.ChatDetailRoute(userId))
+                }
+            }
+        }
     }
 }

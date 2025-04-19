@@ -11,12 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.droidchat.navigation.ChatNavHost
 import com.example.droidchat.navigation.DroidChatNavigationState
-import com.example.droidchat.navigation.rememberDroidChatNavigationState
 import com.example.droidchat.ui.components.BottomNavigationMenu
 import com.example.droidchat.ui.theme.Grey1
 
 @Composable
-fun ChatApp(navigationState: DroidChatNavigationState = rememberDroidChatNavigationState()) {
+fun ChatApp(navigationState: DroidChatNavigationState) {
     val topLevelDestinations = remember(navigationState.topLevelDestinations) {
         navigationState.topLevelDestinations.toSet()
     }
