@@ -5,12 +5,14 @@ import android.content.Intent
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.net.toUri
 import com.example.droidchat.DroidChatApp
 import com.example.droidchat.MainActivity
 import com.example.droidchat.R
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.util.NotificationPayloadParse
 import com.example.droidchat.model.NotificationData
+import com.example.droidchat.navigation.CHAT_BASE_DETAIL_URI
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +58,10 @@ class FcmMessagingService : FirebaseMessagingService() {
             return
         }
 
-        val intent = Intent(applicationContext, MainActivity::class.java)
+        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+            action = Intent.ACTION_VIEW
+            data = "$CHAT_BASE_DETAIL_URI/${notificationData.userId}".toUri()
+        }
 
         val pendingIntent = PendingIntent.getActivity(
             applicationContext,

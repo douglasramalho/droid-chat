@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import androidx.navigation.navOptions
 import com.example.droidchat.navigation.extension.slidOutTo
 import com.example.droidchat.navigation.extension.slideInTo
@@ -15,6 +16,8 @@ import com.example.droidchat.ui.feature.signin.SignInRoute
 import com.example.droidchat.ui.feature.signup.SignUpRoute
 import com.example.droidchat.ui.feature.splash.SplashRoute
 import com.example.droidchat.ui.feature.users.UsersRoute
+
+const val CHAT_BASE_DETAIL_URI = "droidchat://chat_detail"
 
 @Composable
 fun ChatNavHost(
@@ -101,7 +104,13 @@ fun ChatNavHost(
                 }
             )
         }
-        composable<Route.ChatDetailRoute> {
+        composable<Route.ChatDetailRoute>(
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$CHAT_BASE_DETAIL_URI/{userId}"
+                }
+            )
+        ) {
             ChatDetailRoute(
                 navigateBack = {
                     navController.popBackStack()
