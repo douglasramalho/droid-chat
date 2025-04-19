@@ -26,7 +26,7 @@ fun ChatNavHost(
     val navController = navigationState.navController
     val activity = LocalActivity.current
 
-    NavHost(navController = navController, startDestination = Route.SplashRoute) {
+    NavHost(navController = navController, startDestination = navigationState.startDestination) {
         composable<Route.SplashRoute> {
             SplashRoute(
                 onNavigateToSignIn = {

@@ -28,6 +28,8 @@ class DroidChatNavigationState(
 ) {
     private val previousDestination = mutableStateOf<NavDestination?>(null)
 
+    var startDestination: Route = Route.SplashRoute
+
     val currentDestination: NavDestination?
         @Composable get() {
             // Collect the currentBackStackEntryFlow as a state
