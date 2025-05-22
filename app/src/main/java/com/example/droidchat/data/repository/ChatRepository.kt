@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
 
+    val newMessageReceivedFlow: Flow<Unit>
+
     suspend fun getChats(offset: Int, limit: Int): Result<List<Chat>>
 
     fun getPagedMessages(receiverId: Int): Flow<PagingData<ChatMessage>>

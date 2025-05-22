@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import com.example.droidchat.DroidChatApp
 import com.example.droidchat.MainActivity
 import com.example.droidchat.R
+import com.example.droidchat.data.manager.ChatNotificationManager
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.util.NotificationPayloadParse
 import com.example.droidchat.model.NotificationData
@@ -30,6 +31,9 @@ class FcmMessagingService : FirebaseMessagingService() {
     lateinit var selfUserManager: SelfUserManager
 
     @Inject
+    lateinit var chatNotificationManager: ChatNotificationManager
+
+    @Inject
     lateinit var notificationPayloadParse: NotificationPayloadParse
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -46,6 +50,7 @@ class FcmMessagingService : FirebaseMessagingService() {
                 val notificationPayloadJsonString = message.data["messagePayload"]
                 notificationPayloadJsonString?.let { payloadString ->
                     val notificationData = notificationPayloadParse.parse(payloadString)
+                    chatNotificationManager.notifyNewMessage(notificationData)
                     sendNotification(notificationData)
                 }
             }

@@ -9,6 +9,7 @@ import com.example.droidchat.data.database.DatabaseDataSource
 import com.example.droidchat.data.database.DroidChatDatabase
 import com.example.droidchat.data.database.entity.MessageEntity
 import com.example.droidchat.data.di.IoDispatcher
+import com.example.droidchat.data.manager.ChatNotificationManager
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.mapper.asDomainModel
 import com.example.droidchat.data.network.NetworkDataSource
@@ -34,11 +35,15 @@ class ChatRepositoryImpl @Inject constructor(
     private val databaseDataSource: DatabaseDataSource,
     private val database: DroidChatDatabase,
     private val selfUserManager: SelfUserManager,
+    private val chatNotificationManager: ChatNotificationManager,
     private val chatWebSocketService: ChatWebSocketService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ChatRepository {
 
-    val selfUser = runBlocking { selfUserManager.selfUserFlow.firstOrNull() }
+    private val selfUser = runBlocking { selfUserManager.selfUserFlow.firstOrNull() }
+
+    override val newMessageReceivedFlow: Flow<Unit>
+        get() = chatNotificationManager.incomingMessageFlow.map { }
 
     override suspend fun getChats(offset: Int, limit: Int): Result<List<Chat>> {
         return withContext(ioDispatcher) {
