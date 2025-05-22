@@ -50,7 +50,11 @@ class FcmMessagingService : FirebaseMessagingService() {
                 val notificationPayloadJsonString = message.data["messagePayload"]
                 notificationPayloadJsonString?.let { payloadString ->
                     val notificationData = notificationPayloadParse.parse(payloadString)
-                    chatNotificationManager.notifyNewMessage(notificationData)
+                    if (DroidChatApp.onAppForeground) {
+                        chatNotificationManager.notifyNewMessage(notificationData)
+                        return@launch
+                    }
+
                     sendNotification(notificationData)
                 }
             }
