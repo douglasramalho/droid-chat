@@ -1,5 +1,6 @@
 package com.example.droidchat.data.network.di
 
+import com.example.droidchat.BuildConfig
 import com.example.droidchat.data.manager.token.TokenManager
 import com.example.droidchat.model.NetworkException
 import dagger.Module
@@ -45,9 +46,11 @@ object ApiModule {
                 contentConverter = KotlinxWebsocketSerializationConverter(Json)
             }
 
-            install(Logging) {
-                logger = Logger.SIMPLE
-                level = LogLevel.ALL
+            if (BuildConfig.DEBUG) {
+                install(Logging) {
+                    logger = Logger.SIMPLE
+                    level = LogLevel.ALL
+                }
             }
 
             install(ContentNegotiation) {
