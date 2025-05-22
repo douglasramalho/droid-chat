@@ -1,11 +1,16 @@
 package com.example.droidchat.data.network.di
 
+import android.content.Context
+import android.content.Intent
 import com.example.droidchat.BuildConfig
+import com.example.droidchat.MainActivity
+import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.manager.token.TokenManager
 import com.example.droidchat.model.NetworkException
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -23,6 +28,7 @@ import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.headers
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
@@ -37,7 +43,10 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideHttpClient(
+        @ApplicationContext
+        context: Context,
         tokenManager: TokenManager,
+        selfUserManager: SelfUserManager,
     ): HttpClient {
         return HttpClient(CIO) {
             expectSuccess = true
@@ -70,11 +79,22 @@ object ApiModule {
 
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { cause, _ ->
-                    throw if (cause is ClientRequestException) {
-                        val errorMessage = cause.response.bodyAsText()
-                        NetworkException.ApiException(errorMessage, cause.response.status.value)
+                    if (cause is ClientRequestException) {
+                        if (cause.response.status == HttpStatusCode.Unauthorized) {
+                            tokenManager.clearAccessToken()
+                            selfUserManager.clearSelfUser()
+
+                            context.startActivity(
+                                Intent(context, MainActivity::class.java).apply {
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                }
+                            )
+                        } else {
+                            val errorMessage = cause.response.bodyAsText()
+                            throw NetworkException.ApiException(errorMessage, cause.response.status.value)
+                        }
                     } else {
-                        NetworkException.UnknownNetworkException(cause)
+                        throw NetworkException.UnknownNetworkException(cause)
                     }
                 }
             }
