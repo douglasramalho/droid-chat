@@ -2,7 +2,6 @@ package com.example.droidchat
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,9 +18,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        Log.d("MainActivity", "onCreate: ${intent.data}")
+        super.onCreate(savedInstanceState)
         setContent {
             DroidChatTheme {
                 val navigationState = rememberDroidChatNavigationState()
