@@ -37,7 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.droidchat.R
 import com.example.droidchat.ui.components.AppDialog
 import com.example.droidchat.ui.components.PrimaryButton

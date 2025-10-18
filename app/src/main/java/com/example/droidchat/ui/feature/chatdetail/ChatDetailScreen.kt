@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -183,7 +184,10 @@ fun ChatDetailScreen(
                             },
                         tint = MaterialTheme.colorScheme.inverseOnSurface
                     )
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                )
             )
         },
     ) {
@@ -304,7 +308,7 @@ fun ChatDetailScreen(
                 onSendClicked = onSendClicked,
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp, top = 8.dp),
+                    .padding(top = 8.dp),
                 placeholder = stringResource(R.string.feature_chat_detail_text_field_placeholder)
             )
         }

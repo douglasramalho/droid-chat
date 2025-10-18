@@ -29,7 +29,7 @@ fun ChatScaffold(
     snackbarHost: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
-    containerColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     contentColor: Color = MaterialTheme.colorScheme.onSurface,
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
     content: @Composable BoxScope.() -> Unit
