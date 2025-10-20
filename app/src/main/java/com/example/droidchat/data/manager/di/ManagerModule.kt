@@ -1,5 +1,7 @@
 package com.example.droidchat.data.manager.di
 
+import com.example.droidchat.data.manager.navigation.NavigationManager
+import com.example.droidchat.data.manager.navigation.NavigationManagerImpl
 import com.example.droidchat.data.manager.notification.NotificationManager
 import com.example.droidchat.data.manager.notification.NotificationManagerImpl
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
@@ -27,4 +29,8 @@ interface TokenManagerModule {
     @Binds
     @Singleton
     fun bindNotificationManager(notificationManager: NotificationManagerImpl): NotificationManager
+
+    @Binds
+    @Singleton
+    fun bindNavigationManager(navigationManager: NavigationManagerImpl): NavigationManager
 }

@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.example.droidchat.ui.feature.chats.navigateToChats
+import com.example.droidchat.ui.feature.profile.navigateToProfile
 import com.example.droidchat.ui.feature.users.navigateToUsers
 
 @Composable
@@ -66,8 +67,7 @@ class DroidChatNavigationState(
 
             TopLevelDestination.PLUS_BUTTON -> navController.navigateToUsers(topLevelNavOptions)
 
-            TopLevelDestination.PROFILE -> {
-            }
+            TopLevelDestination.PROFILE -> navController.navigateToProfile(topLevelNavOptions)
         }
     }
 }

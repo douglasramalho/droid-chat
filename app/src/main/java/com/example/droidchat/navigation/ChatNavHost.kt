@@ -12,6 +12,7 @@ import com.example.droidchat.navigation.extension.slideInTo
 import com.example.droidchat.ui.feature.chatdetail.ChatDetailRoute
 import com.example.droidchat.ui.feature.chats.ChatsRoute
 import com.example.droidchat.ui.feature.chats.navigateToChats
+import com.example.droidchat.ui.feature.profile.ProfileRoute
 import com.example.droidchat.ui.feature.signin.SignInRoute
 import com.example.droidchat.ui.feature.signup.SignUpRoute
 import com.example.droidchat.ui.feature.splash.SplashRoute
@@ -116,6 +117,9 @@ fun ChatNavHost(
                     navController.popBackStack()
                 }
             )
+        }
+        composable<Route.ProfileRoute> {
+            ProfileRoute()
         }
     }
 }

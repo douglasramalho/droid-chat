@@ -1,6 +1,7 @@
 package com.example.droidchat.data.repository
 
 import com.example.droidchat.data.di.IoDispatcher
+import com.example.droidchat.data.manager.navigation.NavigationManager
 import com.example.droidchat.data.manager.notification.NotificationManager
 import com.example.droidchat.data.manager.selfuser.SelfUserManager
 import com.example.droidchat.data.manager.token.TokenManager
@@ -25,6 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val tokenManager: TokenManager,
     private val selfUserManager: SelfUserManager,
     private val notificationManager: NotificationManager,
+    private val navigationManager: NavigationManager,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : AuthRepository {
 
@@ -113,6 +115,18 @@ class AuthRepositoryImpl @Inject constructor(
                         token = token
                     )
                 )
+            }
+        }
+    }
+
+    override suspend fun signOut() {
+        withContext(ioDispatcher) {
+            runCatching {
+                clearAccessToken()
+                selfUserManager.clearSelfUser()
+
+                // Clear app data and navigate to sign in screen
+                navigationManager.navigateToSignIn()
             }
         }
     }

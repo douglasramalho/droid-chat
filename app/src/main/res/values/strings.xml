@@ -58,6 +58,9 @@
     <string name="feature_chat_detail_text_field_placeholder">Mensagem</string>
     <string name="feature_chat_detail_online_status">Online</string>
 
+    <string name="feature_profile_title">Perfil</string>
+    <string name="feature_profile_logout">Sair</string>
+
     <string name="bottom_navigation_item_chats">Conversas</string>
     <string name="bottom_navigation_item_profile">Perfil</string>
 
